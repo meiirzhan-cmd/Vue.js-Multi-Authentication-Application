@@ -47,6 +47,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import("@/views/ProfileView.vue"),
     meta: { requiresAuth: true },
   },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: () => import("@/views/NotFoundView.vue"),
+  },
 ];
 
 const router = createRouter({
