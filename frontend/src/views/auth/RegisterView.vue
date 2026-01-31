@@ -32,11 +32,12 @@ const passwordRequirements = computed(() => [
 ]);
 
 const isPasswordValid = computed(() =>
-  passwordRequirements.value.every((req) => req.met)
+  passwordRequirements.value.every((req) => req.met),
 );
 
 const passwordsMatch = computed(
-  () => password.value === confirmPassword.value && confirmPassword.value !== ""
+  () =>
+    password.value === confirmPassword.value && confirmPassword.value !== "",
 );
 
 const canSubmit = computed(
@@ -46,14 +47,18 @@ const canSubmit = computed(
     isPasswordValid.value &&
     passwordsMatch.value &&
     agreedToTerms.value &&
-    !isLoading.value
+    !isLoading.value,
 );
 
 // Submit handler
 async function handleRegister() {
   if (!canSubmit.value) return;
 
-  const success = await authStore.register(email.value, password.value, name.value);
+  const success = await authStore.register(
+    email.value,
+    password.value,
+    name.value,
+  );
 
   if (success) {
     router.push("/dashboard");
@@ -73,7 +78,10 @@ function handleGoogleLogin() {
         <h1 class="text-2xl font-bold text-gray-900">Create your account</h1>
         <p class="mt-2 text-gray-600">
           Already have an account?
-          <router-link to="/login" class="text-indigo-600 hover:text-indigo-500">
+          <router-link
+            to="/login"
+            class="text-indigo-600 hover:text-indigo-500"
+          >
             Sign in
           </router-link>
         </p>
@@ -107,7 +115,9 @@ function handleGoogleLogin() {
 
         <!-- Password -->
         <div class="space-y-1">
-          <label class="block text-sm font-medium text-gray-700">Password</label>
+          <label class="block text-sm font-medium text-gray-700"
+            >Password</label
+          >
           <div class="relative">
             <input
               v-model="password"
@@ -142,7 +152,9 @@ function handleGoogleLogin() {
 
         <!-- Confirm Password -->
         <div class="space-y-1">
-          <label class="block text-sm font-medium text-gray-700">Confirm password</label>
+          <label class="block text-sm font-medium text-gray-700"
+            >Confirm password</label
+          >
           <div class="relative">
             <input
               v-model="confirmPassword"
@@ -183,9 +195,13 @@ function handleGoogleLogin() {
           />
           <label for="terms" class="text-sm text-gray-600">
             I agree to the
-            <a href="#" class="text-indigo-600 hover:text-indigo-500">Terms of Service</a>
+            <a href="#" class="text-indigo-600 hover:text-indigo-500"
+              >Terms of Service</a
+            >
             and
-            <a href="#" class="text-indigo-600 hover:text-indigo-500">Privacy Policy</a>
+            <a href="#" class="text-indigo-600 hover:text-indigo-500"
+              >Privacy Policy</a
+            >
           </label>
         </div>
 
@@ -211,11 +227,7 @@ function handleGoogleLogin() {
       </div>
 
       <!-- Google OAuth -->
-      <AppButton
-        variant="outline"
-        full-width
-        @click="handleGoogleLogin"
-      >
+      <AppButton variant="outline" full-width @click="handleGoogleLogin">
         <GoogleIcon />
         Continue with Google
       </AppButton>
