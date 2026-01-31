@@ -1,0 +1,18 @@
+# Environment files (NEVER commit these)
+.env
+.env.local
+.env.*.local
+*.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+
+# Dependencies (handled by subdirectory gitignores)
+node_modules/
