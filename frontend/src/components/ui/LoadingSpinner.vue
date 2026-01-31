@@ -6,7 +6,7 @@ interface Props {
   text?: string;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   size: "md",
 });
 
@@ -20,7 +20,7 @@ const sizeClasses = {
 
 <template>
   <div class="flex flex-col items-center justify-center gap-3">
-    <Loader2 :class="[sizeClasses[size], 'animate-spin text-indigo-600']" />
+    <Loader2 :class="[sizeClasses[props.size], 'animate-spin text-indigo-600']" />
     <p v-if="text" class="text-sm text-gray-600">{{ text }}</p>
   </div>
 </template>

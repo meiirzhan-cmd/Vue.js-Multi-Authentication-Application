@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { AlertCircle, CheckCircle, Info, AlertTriangle, X } from "lucide-vue-next";
+import {
+  AlertCircle,
+  CheckCircle,
+  Info,
+  AlertTriangle,
+  X,
+} from "lucide-vue-next";
 
 interface Props {
   variant?: "info" | "success" | "warning" | "error";
@@ -43,7 +49,7 @@ const styles = computed(() => {
 <template>
   <div :class="['px-4 py-3 rounded-lg border', styles.container]" role="alert">
     <div class="flex items-start gap-3">
-      <component :is="styles.icon" class="w-5 h-5 flex-shrink-0 mt-0.5" />
+      <component :is="styles.icon" class="w-5 h-5 shrink-0 mt-0.5" />
       <div class="flex-1 min-w-0">
         <p v-if="title" class="font-medium">{{ title }}</p>
         <div :class="title ? 'mt-1' : ''">
@@ -53,7 +59,7 @@ const styles = computed(() => {
       <button
         v-if="dismissible"
         @click="emit('dismiss')"
-        class="flex-shrink-0 p-1 rounded hover:bg-black/5 transition-colors"
+        class="shrink-0 p-1 rounded hover:bg-black/5 transition-colors"
       >
         <X class="w-4 h-4" />
       </button>

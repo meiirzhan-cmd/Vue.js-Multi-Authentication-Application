@@ -137,7 +137,6 @@ function handleGoogleLogin() {
               id="password"
               v-model="password"
               :type="showPassword ? 'text' : 'password'"
-              autocomplete="current-password"
               required
               class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
             />

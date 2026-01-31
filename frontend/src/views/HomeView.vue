@@ -67,15 +67,19 @@ const benefits = [
     <section class="relative overflow-hidden">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32">
         <div class="text-center">
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight">
+          <h1
+            class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight"
+          >
             Multi-Auth
             <span class="text-indigo-600">Made Simple</span>
           </h1>
           <p class="mt-6 text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
-            A complete authentication solution with password, magic link, and OAuth support.
-            Built with Vue 3, TypeScript, and Express.
+            A complete authentication solution with password, magic link, and
+            OAuth support. Built with Vue 3, TypeScript, and Express.
           </p>
-          <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div
+            class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
             <router-link v-if="!isAuthenticated" to="/register">
               <AppButton size="lg">
                 Get Started
@@ -89,9 +93,7 @@ const benefits = [
               </AppButton>
             </router-link>
             <router-link v-if="!isAuthenticated" to="/login">
-              <AppButton variant="outline" size="lg">
-                Sign In
-              </AppButton>
+              <AppButton variant="outline" size="lg"> Sign In </AppButton>
             </router-link>
           </div>
         </div>
@@ -123,7 +125,9 @@ const benefits = [
             :key="feature.title"
             class="p-6 rounded-xl border border-gray-200 hover:border-indigo-200 hover:shadow-lg transition-all"
           >
-            <div class="w-12 h-12 rounded-lg bg-indigo-100 flex items-center justify-center mb-4">
+            <div
+              class="w-12 h-12 rounded-lg bg-indigo-100 flex items-center justify-center mb-4"
+            >
               <component :is="feature.icon" class="w-6 h-6 text-indigo-600" />
             </div>
             <h3 class="text-lg font-semibold text-gray-900 mb-2">
@@ -144,8 +148,8 @@ const benefits = [
               Built for Developers
             </h2>
             <p class="text-lg text-gray-600 mb-8">
-              A clean, well-structured codebase that's easy to understand and extend.
-              Perfect as a starter template or learning resource.
+              A clean, well-structured codebase that's easy to understand and
+              extend. Perfect as a starter template or learning resource.
             </p>
             <ul class="space-y-4">
               <li
@@ -164,7 +168,9 @@ const benefits = [
               <div class="w-3 h-3 rounded-full bg-yellow-500" />
               <div class="w-3 h-3 rounded-full bg-green-500" />
             </div>
-            <pre class="text-green-400 overflow-x-auto"><code>// Easy to use authentication store
+            <pre
+              class="text-green-400 overflow-x-auto"
+            ><code>// Easy to use authentication store
 import { useAuthStore } from '@/stores/auth'
 
 const auth = useAuthStore()
@@ -193,13 +199,21 @@ auth.loginWithGoogle()</code></pre>
           Create your account today and explore all authentication methods.
         </p>
         <router-link v-if="!isAuthenticated" to="/register">
-          <AppButton variant="outline" size="lg" class="!border-white !text-white hover:!bg-white/10">
+          <AppButton
+            variant="outline"
+            size="lg"
+            class="border-white! text-black! hover:bg-white/10!"
+          >
             Create Free Account
             <ArrowRight class="w-5 h-5" />
           </AppButton>
         </router-link>
         <router-link v-else to="/dashboard">
-          <AppButton variant="outline" size="lg" class="!border-white !text-white hover:!bg-white/10">
+          <AppButton
+            variant="outline"
+            size="lg"
+            class="border-white! text-black! hover:bg-white/10!"
+          >
             Go to Dashboard
             <ArrowRight class="w-5 h-5" />
           </AppButton>
