@@ -1,20 +1,16 @@
 import { Router } from "express";
 import type { Request, Response, NextFunction } from "express";
 import passport from "passport";
-import { AuthService } from "../services/auth.service";
-import { JWTService } from "../services/jwt.service";
-import { MagicLinkService } from "../services/magic-link.service";
+import { AuthService } from "../services/auth.service.js";
+import { JWTService } from "../services/jwt.service.js";
+import { authenticateAny } from "../middleware/auth.js";
 import {
-  isAuthenticated,
-  authenticateJWT,
-  authenticateAny,
-} from "../middleware/auth";
-import {
-  validateRegistration,
   validateLogin,
   validateMagicLink,
-} from "../middleware/validation";
-import { SafeUser } from "../types";
+  validateRegistration,
+} from "../middleware/validation.js";
+import type { SafeUser } from "../types/index.js";
+import { MagicLinkService } from "../services/magic-link.service.js";
 
 const router = Router();
 
