@@ -14,10 +14,24 @@ jobs:
     environment: production
 
     steps:
+      - name: Check deployment secrets
+        id: check-secrets
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+        run: |
+          if [ -z "$DEPLOY_HOST" ]; then
+            echo "::warning::Deployment skipped - DEPLOY_HOST secret not configured"
+            echo "configured=false" >> $GITHUB_OUTPUT
+          else
+            echo "configured=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Checkout code
+        if: steps.check-secrets.outputs.configured == 'true'
         uses: actions/checkout@v4
 
       - name: Deploy to server
+        if: steps.check-secrets.outputs.configured == 'true'
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.DEPLOY_HOST }}
@@ -39,6 +53,7 @@ jobs:
             docker image prune -af
 
       - name: Health check
+        if: steps.check-secrets.outputs.configured == 'true'
         run: |
           sleep 30
           curl -f ${{ secrets.HEALTH_CHECK_URL }} || exit 1
