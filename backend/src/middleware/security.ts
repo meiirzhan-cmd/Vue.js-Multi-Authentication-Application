@@ -103,6 +103,7 @@ export function setupSecurity(app: Express): void {
       // Use email if available, otherwise IP
       return req.body?.email || req.ip || "unknown";
     },
+    validate: false,
   });
 
   // Magic link rate limit (prevent email spam)
@@ -113,6 +114,7 @@ export function setupSecurity(app: Express): void {
     legacyHeaders: false,
     message: { error: "Too many magic link requests. Please try again later." },
     keyGenerator: (req) => req.body?.email || req.ip || "unknown",
+    validate: false,
   });
 
   app.use("/api", generalLimiter);
@@ -169,11 +171,12 @@ export function sanitizeInput(
   if (req.body) {
     req.body = sanitize(req.body);
   }
+  // req.query and req.params are read-only in Express 5, mutate in-place
   if (req.query) {
-    req.query = sanitize(req.query);
+    sanitize(req.query);
   }
   if (req.params) {
-    req.params = sanitize(req.params);
+    sanitize(req.params);
   }
 
   next();

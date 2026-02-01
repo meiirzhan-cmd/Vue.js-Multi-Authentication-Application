@@ -243,7 +243,7 @@ router.post(
 // Logout (current session/token)
 // ============================================
 router.post("/logout", authenticateAny, async (req: Request, res: Response) => {
-  const refreshToken = req.body.refreshToken || req.cookies.refreshToken;
+  const refreshToken = req.body?.refreshToken || req.cookies?.refreshToken;
 
   // Revoke refresh token if provided
   if (refreshToken) {

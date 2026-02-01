@@ -1,7 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import "dotenv/config";
-import passport from "passport";
+import passport from "./config/passport.js";
 import { initRedis, closeRedis } from "./config/redis.js";
 import { createSessionMiddleware } from "./config/session.js";
 import { setupSecurity, sanitizeInput } from "./middleware/security.js";
