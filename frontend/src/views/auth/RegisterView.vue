@@ -28,7 +28,7 @@ const passwordRequirements = computed(() => [
   { met: password.value.length >= 8, text: "At least 8 characters" },
   { met: /[A-Z]/.test(password.value), text: "One uppercase letter" },
   { met: /[a-z]/.test(password.value), text: "One lowercase letter" },
-  { met: /[0-9]/.test(password.value), text: "One number" },
+  { met: /\d/.test(password.value), text: "One number" },
 ]);
 
 const isPasswordValid = computed(() =>
@@ -115,14 +115,14 @@ function handleGoogleLogin() {
 
         <!-- Password -->
         <div class="space-y-1">
-          <label class="block text-sm font-medium text-gray-700"
+          <label for="password" class="block text-sm font-medium text-gray-700"
             >Password</label
           >
           <div class="relative">
             <input
+              id="password"
               v-model="password"
               :type="showPassword ? 'text' : 'password'"
-              autocomplete="new-password"
               required
               class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
             />
@@ -152,14 +152,14 @@ function handleGoogleLogin() {
 
         <!-- Confirm Password -->
         <div class="space-y-1">
-          <label class="block text-sm font-medium text-gray-700"
+          <label for="confirm-password" class="block text-sm font-medium text-gray-700"
             >Confirm password</label
           >
           <div class="relative">
             <input
+              id="confirm-password"
               v-model="confirmPassword"
               :type="showConfirmPassword ? 'text' : 'password'"
-              autocomplete="new-password"
               required
               class="block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               :class="
