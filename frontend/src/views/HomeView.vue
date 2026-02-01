@@ -102,7 +102,7 @@ const benefits = [
       <!-- Background decoration -->
       <div class="absolute inset-0 -z-10 overflow-hidden">
         <div
-          class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-indigo-100/50 blur-3xl"
+          class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 w-800px h-800px rounded-full bg-indigo-100/50 blur-3xl"
         />
       </div>
     </section>
@@ -157,7 +157,7 @@ const benefits = [
                 :key="benefit"
                 class="flex items-center gap-3"
               >
-                <CheckCircle class="w-5 h-5 text-green-500 flex-shrink-0" />
+                <CheckCircle class="w-5 h-5 text-green-500 shrink-0" />
                 <span class="text-gray-700">{{ benefit }}</span>
               </li>
             </ul>
