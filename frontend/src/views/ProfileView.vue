@@ -42,16 +42,21 @@ const passwordSuccess = ref(false);
 const passwordError = ref("");
 
 // Watch for user changes
-watch(user, (newUser) => {
-  if (newUser) {
-    profileForm.value.name = newUser.name || "";
-    profileForm.value.avatar = newUser.avatar || "";
-  }
-}, { immediate: true });
+watch(
+  user,
+  (newUser) => {
+    if (newUser) {
+      profileForm.value.name = newUser.name || "";
+      profileForm.value.avatar = newUser.avatar || "";
+    }
+  },
+  { immediate: true },
+);
 
 // User initials
 const userInitials = computed(() => {
-  if (!user.value?.name) return user.value?.email?.charAt(0).toUpperCase() || "U";
+  if (!user.value?.name)
+    return user.value?.email?.charAt(0).toUpperCase() || "U";
   return user.value.name
     .split(" ")
     .map((n) => n.charAt(0))
@@ -62,20 +67,29 @@ const userInitials = computed(() => {
 
 // Password requirements
 const passwordRequirements = computed(() => [
-  { met: passwordForm.value.newPassword.length >= 8, text: "At least 8 characters" },
-  { met: /[A-Z]/.test(passwordForm.value.newPassword), text: "One uppercase letter" },
-  { met: /[a-z]/.test(passwordForm.value.newPassword), text: "One lowercase letter" },
-  { met: /[0-9]/.test(passwordForm.value.newPassword), text: "One number" },
+  {
+    met: passwordForm.value.newPassword.length >= 8,
+    text: "At least 8 characters",
+  },
+  {
+    met: /[A-Z]/.test(passwordForm.value.newPassword),
+    text: "One uppercase letter",
+  },
+  {
+    met: /[a-z]/.test(passwordForm.value.newPassword),
+    text: "One lowercase letter",
+  },
+  { met: /\d/.test(passwordForm.value.newPassword), text: "One number" },
 ]);
 
 const isNewPasswordValid = computed(() =>
-  passwordRequirements.value.every((req) => req.met)
+  passwordRequirements.value.every((req) => req.met),
 );
 
 const passwordsMatch = computed(
   () =>
     passwordForm.value.newPassword === passwordForm.value.confirmPassword &&
-    passwordForm.value.confirmPassword !== ""
+    passwordForm.value.confirmPassword !== "",
 );
 
 const canChangePassword = computed(
@@ -83,7 +97,7 @@ const canChangePassword = computed(
     passwordForm.value.currentPassword &&
     isNewPasswordValid.value &&
     passwordsMatch.value &&
-    !isPasswordLoading.value
+    !isPasswordLoading.value,
 );
 
 // Update profile
@@ -106,7 +120,8 @@ async function handleProfileUpdate() {
       profileSuccess.value = false;
     }, 3000);
   } catch (err: any) {
-    profileError.value = err.response?.data?.message || "Failed to update profile";
+    profileError.value =
+      err.response?.data?.message || "Failed to update profile";
   } finally {
     isProfileLoading.value = false;
   }
@@ -137,7 +152,8 @@ async function handlePasswordChange() {
       passwordSuccess.value = false;
     }, 3000);
   } catch (err: any) {
-    passwordError.value = err.response?.data?.message || "Failed to change password";
+    passwordError.value =
+      err.response?.data?.message || "Failed to change password";
   } finally {
     isPasswordLoading.value = false;
   }
@@ -154,7 +170,9 @@ async function handleLogoutAllDevices() {
   <AppLayout>
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div class="mb-8">
-        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Profile Settings</h1>
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">
+          Profile Settings
+        </h1>
         <p class="mt-1 text-gray-600">
           Manage your account settings and preferences.
         </p>
@@ -163,7 +181,9 @@ async function handleLogoutAllDevices() {
       <div class="space-y-6">
         <!-- Profile Information -->
         <AppCard>
-          <h2 class="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
+          <h2
+            class="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2"
+          >
             <User class="w-5 h-5" />
             Profile Information
           </h2>
@@ -193,7 +213,9 @@ async function handleLogoutAllDevices() {
                     {{ userInitials }}
                   </span>
                 </div>
-                <div class="absolute -bottom-1 -right-1 p-1.5 bg-white rounded-full shadow-md">
+                <div
+                  class="absolute -bottom-1 -right-1 p-1.5 bg-white rounded-full shadow-md"
+                >
                   <Camera class="w-4 h-4 text-gray-500" />
                 </div>
               </div>
@@ -218,9 +240,12 @@ async function handleLogoutAllDevices() {
 
             <!-- Email (read-only) -->
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700">Email address</label>
+              <label for="email" class="block text-sm font-medium text-gray-700"
+                >Email address</label
+              >
               <div class="flex items-center gap-2">
                 <input
+                  id="email"
                   :value="user?.email"
                   type="email"
                   disabled
@@ -241,7 +266,9 @@ async function handleLogoutAllDevices() {
 
         <!-- Change Password (only for LOCAL provider) -->
         <AppCard v-if="user?.provider === 'LOCAL'">
-          <h2 class="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
+          <h2
+            class="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2"
+          >
             <Shield class="w-5 h-5" />
             Change Password
           </h2>
@@ -257,12 +284,14 @@ async function handleLogoutAllDevices() {
           <form @submit.prevent="handlePasswordChange" class="space-y-5">
             <!-- Current Password -->
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700">Current password</label>
+              <label for="current-password" class="block text-sm font-medium text-gray-700"
+                >Current password</label
+              >
               <div class="relative">
                 <input
+                  id="current-password"
                   v-model="passwordForm.currentPassword"
                   :type="showCurrentPassword ? 'text' : 'password'"
-                  autocomplete="current-password"
                   required
                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 />
@@ -279,12 +308,14 @@ async function handleLogoutAllDevices() {
 
             <!-- New Password -->
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700">New password</label>
+              <label for="new-password" class="block text-sm font-medium text-gray-700"
+                >New password</label
+              >
               <div class="relative">
                 <input
+                  id="new-password"
                   v-model="passwordForm.newPassword"
                   :type="showNewPassword ? 'text' : 'password'"
-                  autocomplete="new-password"
                   required
                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 />
@@ -314,12 +345,14 @@ async function handleLogoutAllDevices() {
 
             <!-- Confirm New Password -->
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700">Confirm new password</label>
+              <label for="confirm-password" class="block text-sm font-medium text-gray-700"
+                >Confirm new password</label
+              >
               <div class="relative">
                 <input
+                  id="confirm-password"
                   v-model="passwordForm.confirmPassword"
                   :type="showConfirmPassword ? 'text' : 'password'"
-                  autocomplete="new-password"
                   required
                   class="block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                   :class="
@@ -346,7 +379,11 @@ async function handleLogoutAllDevices() {
             </div>
 
             <div class="flex justify-end">
-              <AppButton type="submit" :loading="isPasswordLoading" :disabled="!canChangePassword">
+              <AppButton
+                type="submit"
+                :loading="isPasswordLoading"
+                :disabled="!canChangePassword"
+              >
                 Change Password
               </AppButton>
             </div>
@@ -355,17 +392,22 @@ async function handleLogoutAllDevices() {
 
         <!-- Security Actions -->
         <AppCard>
-          <h2 class="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
+          <h2
+            class="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2"
+          >
             <LogOut class="w-5 h-5" />
             Session Management
           </h2>
 
           <div class="space-y-4">
-            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div
+              class="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+            >
               <div>
                 <p class="font-medium text-gray-900">Sign out all devices</p>
                 <p class="text-sm text-gray-500">
-                  This will sign you out from all devices except the current one.
+                  This will sign you out from all devices except the current
+                  one.
                 </p>
               </div>
               <AppButton variant="danger" @click="handleLogoutAllDevices">
