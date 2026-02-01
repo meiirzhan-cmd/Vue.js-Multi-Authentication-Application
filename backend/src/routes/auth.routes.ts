@@ -250,18 +250,17 @@ router.post("/logout", authenticateAny, async (req: Request, res: Response) => {
     await JWTService.revokeRefreshToken(refreshToken);
   }
 
-  // Destroy session
-  req.logout((err) => {
-    if (err) {
-      console.error("Logout error:", err);
-    }
-  });
+  // Clear user from request
+  req.user = undefined;
 
-  req.session.destroy((err) => {
-    if (err) {
-      console.error("Session destroy error:", err);
-    }
-  });
+  // Destroy session if it exists
+  if (req.session) {
+    req.session.destroy((err) => {
+      if (err) {
+        console.error("Session destroy error:", err);
+      }
+    });
+  }
 
   res.clearCookie("sid");
   res.json({ message: "Logged out" });
@@ -278,18 +277,17 @@ router.post(
 
     await JWTService.revokeAllUserTokens(userId);
 
-    // Destroy current session
-    req.logout((err) => {
-      if (err) {
-        console.error("Logout error:", err);
-      }
-    });
+    // Clear user from request
+    req.user = undefined;
 
-    req.session.destroy((err) => {
-      if (err) {
-        console.error("Session destroy error:", err);
-      }
-    });
+    // Destroy session if it exists
+    if (req.session) {
+      req.session.destroy((err) => {
+        if (err) {
+          console.error("Session destroy error:", err);
+        }
+      });
+    }
 
     res.clearCookie("sid");
     res.json({ message: "Logged out from all devices" });
