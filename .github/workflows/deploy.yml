@@ -46,7 +46,7 @@ jobs:
 
       # Slack notifications (optional - remove if not using Slack)
       - name: Notify on success
-        if: success() && secrets.SLACK_WEBHOOK_URL != ''
+        if: success()
         uses: slackapi/slack-github-action@v1.26.0
         with:
           payload: |
@@ -67,7 +67,7 @@ jobs:
         continue-on-error: true
 
       - name: Notify on failure
-        if: failure() && secrets.SLACK_WEBHOOK_URL != ''
+        if: failure()
         uses: slackapi/slack-github-action@v1.26.0
         with:
           payload: |
