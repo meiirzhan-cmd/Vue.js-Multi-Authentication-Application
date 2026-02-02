@@ -98,14 +98,7 @@ jobs:
           SMTP_USER: test@test.com
           SMTP_PASS: test-password
           EMAIL_FROM: noreply@test.com
-        run: npm test -- --coverage --passWithNoTests
-
-      - name: Upload coverage
-        uses: codecov/codecov-action@v4
-        with:
-          directory: ./backend/coverage
-          flags: backend
-        continue-on-error: true
+        run: npm test -- --passWithNoTests
 
   # ===========================================
   # Frontend Tests
@@ -141,21 +134,13 @@ jobs:
 
       - name: Run tests
         working-directory: ./frontend
-        run: npm test -- --coverage --passWithNoTests
-        continue-on-error: true
+        run: npm test -- --passWithNoTests
 
       - name: Build
         working-directory: ./frontend
         env:
           VITE_API_URL: http://localhost:3000/api
         run: npm run build
-
-      - name: Upload coverage
-        uses: codecov/codecov-action@v4
-        with:
-          directory: ./frontend/coverage
-          flags: frontend
-        continue-on-error: true
 
   # ===========================================
   # Security Scan (Optional)
