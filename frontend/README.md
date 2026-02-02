@@ -19,6 +19,10 @@ frontend/
 ├── src/
 │   ├── App.vue                  # Root component
 │   ├── main.js                  # Application entry point
+│   ├── __tests__/               # Test files
+│   │   ├── setup.ts             # Test setup and mocks
+│   │   ├── stores/              # Store tests
+│   │   └── components/          # Component tests
 │   ├── components/
 │   │   ├── icons/
 │   │   │   └── GoogleIcon.vue   # Google logo icon
@@ -80,8 +84,60 @@ npm run dev
 | `npm run dev` | Start development server on port 3001 |
 | `npm run build` | Build for production |
 | `npm run preview` | Preview production build |
+| `npm run test` | Run tests with Vitest |
+| `npm run test:watch` | Run tests in watch mode |
+| `npm run test:coverage` | Run tests with coverage report |
 | `npm run lint` | Run ESLint |
 | `npm run type-check` | Run TypeScript type checking |
+
+## Testing
+
+The project uses [Vitest](https://vitest.dev/) with [Vue Test Utils](https://test-utils.vuejs.org/) for unit and component testing.
+
+### Test Structure
+
+```text
+src/__tests__/
+├── setup.ts                    # Test setup (mocks for localStorage, location)
+├── stores/
+│   └── auth.spec.ts            # Auth store tests (30 tests)
+└── components/
+    ├── AppButton.spec.ts       # Button component tests (26 tests)
+    ├── AppInput.spec.ts        # Input component tests (21 tests)
+    └── AppAlert.spec.ts        # Alert component tests (17 tests)
+```
+
+### Running Tests
+
+```bash
+# Run all tests once
+npm run test
+
+# Run tests in watch mode (re-runs on file changes)
+npm run test:watch
+
+# Run tests with coverage report
+npm run test:coverage
+```
+
+### Writing Tests
+
+Tests follow this pattern:
+
+```typescript
+import { describe, it, expect } from "vitest";
+import { mount } from "@vue/test-utils";
+import MyComponent from "../../components/MyComponent.vue";
+
+describe("MyComponent", () => {
+  it("should render correctly", () => {
+    const wrapper = mount(MyComponent, {
+      props: { title: "Hello" },
+    });
+    expect(wrapper.text()).toContain("Hello");
+  });
+});
+```
 
 ## Environment Variables
 
