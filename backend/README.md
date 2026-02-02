@@ -18,6 +18,10 @@ backend/
 ├── src/
 │   ├── index.ts              # Express server entry point
 │   ├── database.ts           # Prisma client initialization
+│   ├── __tests__/            # Test files
+│   │   ├── setup.ts          # Test setup and mocks
+│   │   ├── jwt.spec.ts       # JWT service tests
+│   │   └── auth.spec.ts      # Auth/password tests
 │   ├── config/
 │   │   ├── passport.ts       # Passport strategies (Local, Google, JWT)
 │   │   ├── session.ts        # Express-session middleware
@@ -73,7 +77,32 @@ npm run dev
 | `npm run dev` | Start development server with hot reload |
 | `npm run build` | Build TypeScript to JavaScript |
 | `npm start` | Start production server |
-| `npm test` | Run tests |
+| `npm test` | Run tests with Vitest |
+| `npm run test:watch` | Run tests in watch mode |
+| `npm run lint` | Run linter |
+
+## Testing
+
+The project uses [Vitest](https://vitest.dev/) for unit testing.
+
+### Test Structure
+
+```text
+src/__tests__/
+├── setup.ts        # Test setup (mocks for Redis, Prisma)
+├── jwt.spec.ts     # JWT token generation/verification tests (11 tests)
+└── auth.spec.ts    # Password hashing and validation tests (6 tests)
+```
+
+### Running Tests
+
+```bash
+# Run all tests once
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+```
 
 ## Environment Variables
 

@@ -178,6 +178,7 @@ The project includes GitHub Actions workflows for CI/CD:
 vue-multi-auth/
 ├── backend/                 # Express.js API
 │   ├── src/
+│   │   ├── __tests__/      # Backend tests (Vitest)
 │   │   ├── config/         # Passport, session, Redis config
 │   │   ├── middleware/     # Auth, security, validation
 │   │   ├── routes/         # API routes
@@ -187,6 +188,7 @@ vue-multi-auth/
 │   └── Dockerfile
 ├── frontend/               # Vue.js SPA
 │   ├── src/
+│   │   ├── __tests__/      # Frontend tests (Vitest + Vue Test Utils)
 │   │   ├── components/     # Reusable components
 │   │   ├── views/          # Page components
 │   │   ├── stores/         # Pinia stores
@@ -197,6 +199,26 @@ vue-multi-auth/
 ├── docker-compose.yml      # Docker orchestration
 └── .github/workflows/      # CI/CD pipelines
 ```
+
+## Testing
+
+Both frontend and backend use [Vitest](https://vitest.dev/) for testing.
+
+```bash
+# Run backend tests
+cd backend && npm test
+
+# Run frontend tests
+cd frontend && npm test
+
+# Run tests in watch mode
+npm run test:watch
+```
+
+| Package  | Tests | Description                                                |
+|----------|-------|------------------------------------------------------------|
+| Backend  | 17    | JWT token generation/verification, password hashing        |
+| Frontend | 94    | Auth store, UI components (AppButton, AppInput, AppAlert)  |
 
 ## API Endpoints
 
